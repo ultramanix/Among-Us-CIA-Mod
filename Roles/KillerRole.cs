@@ -19,7 +19,7 @@ public sealed class KillerRole : CrewmateRole, ICustomRole
         DefaultChance = 100,
         CanModifyChance = false,
         CanGetKilled = true,
-        UseVanillaKillButton = false,
+        UseVanillaKillButton = true,
         CanUseVent = false,
         CanUseSabotage = false,
         TasksCountForProgress = false
