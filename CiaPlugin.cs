@@ -5,6 +5,7 @@ using CIA.Mod.Events;
 using CIA.Mod.Systems.Alerter;
 using CIA.Mod.Systems.Censorer;
 using CIA.Mod.Systems.Killer;
+using CIA.Mod.Systems.Stats;
 using HarmonyLib;
 using MiraAPI.PluginLoading;
 using MiraAPI.Translation;
@@ -38,6 +39,7 @@ public partial class CiaPlugin : BasePlugin, IMiraPlugin
         KillerPatches.Initialize();
         AlerterPatches.Initialize();
         CensorerPatches.Initialize();
+        CiaRoundStatsPatches.Initialize();
         Harmony.PatchAll();
         Log.LogInfo("CIA loaded.");
     }
