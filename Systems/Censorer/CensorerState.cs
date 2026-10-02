@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MiraAPI.Utilities;
 using UnityEngine;
 
 namespace CIA.Mod.Systems.Censorer;
@@ -12,19 +11,22 @@ public static class CensorerState
 
     public static IReadOnlyList<CensorSensor> ActiveSensors => Sensors;
 
-    public static bool TryPlace(byte ownerId, int maxSensors)
+    public static bool CanAdd(int maxSensors)
     {
-        if (Sensors.Count >= maxSensors || PlayerControl.LocalPlayer == null)
+        return Sensors.Count < maxSensors;
+    }
+
+    public static bool HasRoomSensor(int roomId)
+    {
+        return Sensors.Exists(x => x.RoomId == roomId);
+    }
+
+    public static bool AddSensor(byte ownerId, int roomId, Vector3 position, int maxSensors)
+    {
+        if (!CanAdd(maxSensors) || HasRoomSensor(roomId))
             return false;
 
-        var room = Helpers.GetRoom(PlayerControl.LocalPlayer.transform.position);
-        if (room == null)
-            return false;
-
-        if (Sensors.Exists(x => x.RoomId == room.RoomId))
-            return false;
-
-        Sensors.Add(new CensorSensor(ownerId, room.RoomId, PlayerControl.LocalPlayer.transform.position));
+        Sensors.Add(new CensorSensor(ownerId, roomId, position));
         return true;
     }
 
