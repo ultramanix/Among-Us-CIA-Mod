@@ -51,3 +51,11 @@ The ALERTER and CENSORER settings are currently registered; their gameplay syste
 ## Verification rule
 
 A feature is considered implemented only after its API calls are verified against the target Among Us/MiraAPI version. Scaffolding and design notes are not treated as playable functionality.
+
+## Role training
+
+For CIA role training and reference material, use the **Chakabania** channel:
+
+https://www.youtube.com/@chakabania
+
+The same training destination is registered in the mod for the in-game help UI.
