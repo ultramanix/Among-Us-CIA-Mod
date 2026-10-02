@@ -8,6 +8,7 @@ using MiraAPI.Roles;
 using UnityEngine;
 using CIA.Mod.Options.Roles;
 using CIA.Mod.Roles;
+using CIA.Mod.Systems.Stats;
 
 namespace CIA.Mod.Systems.Killer;
 
@@ -23,9 +24,7 @@ public static class KillerPatches
     {
         var localPlayer = PlayerControl.LocalPlayer;
         if (localPlayer != null && CiaRoleDetector.GetRole(localPlayer) == CiaRole.Killer)
-        {
             localPlayer.SetKillTimer(OptionGroupSingleton<KillerRoleSettings>.Instance.KillCooldown);
-        }
     }
 
     private static void OnBeforeMurder(BeforeMurderEvent @event)
@@ -33,23 +32,10 @@ public static class KillerPatches
         var source = @event.Source;
         var target = @event.Target;
 
-        if (source == null || target == null || CiaRoleDetector.GetRole(source) != CiaRole.Killer)
-        {
+        if (source == null || target == null || CiaRoleDetector.GetRole(source) != CiaRole.Killer || !source.AmOwner)
             return;
-        }
 
-        if (!source.AmOwner)
-        {
-            return;
-        }
-
-        if (!IsSameRoom(source, target))
-        {
-            @event.Cancel();
-            return;
-        }
-
-        if (target.Data.IsDead || target.Data.Disconnected)
+        if (!IsSameRoom(source, target) || target.Data.IsDead || target.Data.Disconnected)
         {
             @event.Cancel();
             return;
@@ -57,7 +43,8 @@ public static class KillerPatches
 
         @event.Cancel();
 
-        if (target.Data.Role.Role == RoleTypes.Impostor || target.Data.Role is ICustomRole customRole && customRole.Team == ModdedRoleTeams.Impostor)
+        if (target.Data.Role.Role == RoleTypes.Impostor ||
+            target.Data.Role is ICustomRole customRole && customRole.Team == ModdedRoleTeams.Impostor)
         {
             source.RpcCustomMurder(
                 target,
@@ -73,9 +60,7 @@ public static class KillerPatches
         }
 
         if (KillerHistory.TryGetPosition(target.PlayerId, 5f, out var rollbackPosition))
-        {
             target.NetTransform.RpcSnapTo(rollbackPosition);
-        }
 
         source.Die(DeathReason.Kill, true);
         source.SetKillTimer(OptionGroupSingleton<KillerRoleSettings>.Instance.KillCooldown);
@@ -84,9 +69,7 @@ public static class KillerPatches
     private static bool IsSameRoom(PlayerControl source, PlayerControl target)
     {
         if (ShipStatus.Instance == null)
-        {
             return false;
-        }
 
         var sourceRoom = MiraAPI.Utilities.Helpers.GetRoom(source.transform.position);
         var targetRoom = MiraAPI.Utilities.Helpers.GetRoom(target.transform.position);
@@ -101,10 +84,9 @@ public static class KillerHistoryPatch
     private static void Postfix(PlayerControl __instance)
     {
         if (AmongUsClient.Instance == null || ShipStatus.Instance == null)
-        {
             return;
-        }
 
         KillerHistory.Record(__instance);
+        CiaLastLocation.Update(__instance);
     }
 }
