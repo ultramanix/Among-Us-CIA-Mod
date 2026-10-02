@@ -1,3 +1,4 @@
+using HarmonyLib;
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
 using MiraAPI.GameOptions;
@@ -16,6 +17,7 @@ public static class CensorerPatches
     private static void OnRoundStart(RoundStartEvent _)
     {
         CensorerState.Clear();
+        CensorerPanelUi.Close();
     }
 
     public static bool CanPlaceSensor()
@@ -25,5 +27,14 @@ public static class CensorerPatches
                CiaRoleDetector.GetRole(role) == CiaRole.Censorer &&
                CensorerState.ActiveSensors.Count <
                (int)OptionGroupSingleton<CensorerRoleSettings>.Instance.MaxSensors;
+    }
+}
+
+[HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
+public static class CensorerHudPatch
+{
+    private static void Postfix()
+    {
+        CensorerPanelUi.Update();
     }
 }
