@@ -2,6 +2,8 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using CIA.Mod.Events;
+using CIA.Mod.Systems.Alerter;
+using CIA.Mod.Systems.Killer;
 using HarmonyLib;
 using MiraAPI.PluginLoading;
 using MiraAPI.Translation;
@@ -33,6 +35,7 @@ public partial class CiaPlugin : BasePlugin, IMiraPlugin
     {
         CiaIntroEvents.Initialize();
         KillerPatches.Initialize();
+        AlerterPatches.Initialize();
         Harmony.PatchAll();
         Log.LogInfo("CIA loaded.");
     }
