@@ -8,10 +8,6 @@ public sealed class AlerterRole : CrewmateRole, ICustomRole
 {
     public string IdPart => "Alerter";
     public string IdPrefix => "CIA.Mod.Role";
-    public string RoleName => "ALERTER";
-    public string RoleDescription => "CIA ALERTER";
-    public string RoleMedDescription => "ALERTER";
-    public string RoleLongDescription => "ALERTER";
 
     public Color RoleColor => Color.black;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
