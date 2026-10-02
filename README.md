@@ -57,7 +57,8 @@ All three CIA roles are currently registered as Crewmate-side MiraAPI custom rol
 ### Round statistics and last location
 - Tracks round kills and deaths.
 - Tracks each living player's latest detected room.
-- Statistics and location data are currently backend systems; a polished in-game information screen is not yet complete.
+- A CIA INFO panel is available with **G** and shows role, alive/ghost state, round kills, deaths and last detected location.
+- The information panel is local and closes with **G**.
 
 ### Practice Mode
 - Assignment API supports:
@@ -87,7 +88,7 @@ Therefore, code marked as implemented means the system has been added to the rep
 - Run a real Release build and inspect GitHub Actions output.
 - Runtime-test multiplayer synchronization and role behavior.
 - Finish a user-facing Practice Mode UI.
-- Add polished stats/ghost/last-location screens.
+- Expand the information panel with additional verified ghost-only information when the target API is confirmed.
 - Improve CENSORER placement to use a verified room-entrance interaction.
 - Add a supported mobile input/UI adapter if the target loader permits it.
 
