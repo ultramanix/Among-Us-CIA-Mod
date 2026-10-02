@@ -1,6 +1,7 @@
 using AmongUs.GameOptions;
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
+using MiraAPI.GameModes;
 using MiraAPI.Roles;
 using CIA.Mod.Options.Roles;
 using CIA.Mod.Roles;
