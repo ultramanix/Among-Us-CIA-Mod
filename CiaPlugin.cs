@@ -1,6 +1,7 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
+using CIA.Mod.Events;
 using HarmonyLib;
 using MiraAPI.PluginLoading;
 using MiraAPI.Translation;
@@ -19,6 +20,7 @@ public partial class CiaPlugin : BasePlugin, IMiraPlugin
     public CiaPlugin()
     {
         MiraLocaleManager.Register("CIA.Mod");
+        CiaIntroEvents.Initialize();
     }
 
     public Harmony Harmony { get; } = new(Id);
