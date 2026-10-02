@@ -14,6 +14,7 @@ public static class CiaRoundStatsPatches
     private static void OnRoundStart(RoundStartEvent _)
     {
         CiaRoundStats.Reset();
+        CiaLastLocation.Reset();
     }
 
     private static void OnAfterMurder(AfterMurderEvent @event)
