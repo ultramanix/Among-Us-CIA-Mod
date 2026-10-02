@@ -20,7 +20,6 @@ public partial class CiaPlugin : BasePlugin, IMiraPlugin
     public CiaPlugin()
     {
         MiraLocaleManager.Register("CIA.Mod");
-        CiaIntroEvents.Initialize();
     }
 
     public Harmony Harmony { get; } = new(Id);
@@ -32,6 +31,7 @@ public partial class CiaPlugin : BasePlugin, IMiraPlugin
 
     public override void Load()
     {
+        CiaIntroEvents.Initialize();
         Harmony.PatchAll();
         Log.LogInfo("CIA loaded.");
     }
