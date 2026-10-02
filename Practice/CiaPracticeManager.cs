@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using AmongUs.GameOptions;
 using MiraAPI.Roles;
 
@@ -34,7 +36,7 @@ public static class CiaPracticeManager
         }
     }
 
-    private static bool SetCustom(PlayerControl target, System.Type roleType)
+    private static bool SetCustom(PlayerControl target, Type roleType)
     {
         var role = CustomRoleManager.CustomRoleBehaviours
             .FirstOrDefault(x => x.GetType() == roleType);
