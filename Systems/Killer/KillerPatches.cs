@@ -1,6 +1,7 @@
+using AmongUs.GameOptions;
 using HarmonyLib;
 using MiraAPI.Events;
-using MiraAPI.Events.Mira;
+using MiraAPI.Events.Vanilla.Gameplay;
 using MiraAPI.GameOptions;
 using MiraAPI.Networking;
 using MiraAPI.Roles;
