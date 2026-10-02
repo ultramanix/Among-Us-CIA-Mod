@@ -12,6 +12,8 @@ public sealed class KillerRole : CrewmateRole, ICustomRole
     public Color RoleColor => Color.black;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
 
+    public string RoleMedDescription => "KILLER\n\nRol eğitimi: https://www.youtube.com/@chakabania";
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         MaxRoleCount = 1,
