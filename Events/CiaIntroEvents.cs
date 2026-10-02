@@ -16,9 +16,7 @@ public static class CiaIntroEvents
     {
         var localPlayer = PlayerControl.LocalPlayer;
         if (localPlayer == null || localPlayer.Data?.Role == null)
-        {
             return;
-        }
 
         if (localPlayer.Data.Role is ICustomRole customRole)
         {
@@ -34,5 +32,7 @@ public static class CiaIntroEvents
     private static void OnIntroEnd(IntroEndEvent @event)
     {
         CiaIntroState.IsIntroActive = false;
+        CiaIntroState.IsRolePanelOpen = true;
+        CiaRolePanelUi.Open(CiaIntroState.CurrentRoleName);
     }
 }
