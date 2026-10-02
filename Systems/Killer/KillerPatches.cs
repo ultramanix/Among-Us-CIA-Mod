@@ -16,6 +16,16 @@ public static class KillerPatches
     public static void Initialize()
     {
         MiraEventManager.RegisterEventHandler<BeforeMurderEvent>(OnBeforeMurder);
+        MiraEventManager.RegisterEventHandler<IntroEndEvent>(OnIntroEnd);
+    }
+
+    private static void OnIntroEnd(IntroEndEvent @event)
+    {
+        var localPlayer = PlayerControl.LocalPlayer;
+        if (localPlayer != null && CiaRoleDetector.GetRole(localPlayer) == CiaRole.Killer)
+        {
+            localPlayer.SetKillTimer(OptionGroupSingleton<KillerRoleSettings>.Instance.KillCooldown);
+        }
     }
 
     private static void OnBeforeMurder(BeforeMurderEvent @event)
