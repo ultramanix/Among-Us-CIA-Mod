@@ -17,7 +17,10 @@ public static class CiaInfoPanelUi
             return;
 
         if (_root == null && Input.GetKeyDown(KeyCode.G))
+        {
             Open(local);
+            return;
+        }
 
         if (_root == null || !_root.activeSelf)
             return;
@@ -66,7 +69,6 @@ public static class CiaInfoPanelUi
         }
 
         _root.SetActive(true);
-        Update();
     }
 
     private static void Close()
