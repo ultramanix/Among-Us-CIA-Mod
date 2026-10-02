@@ -2,68 +2,95 @@
 
 CIA is an Among Us role mod built with C#, BepInEx, Reactor and MiraAPI.
 
-## Current implementation
+## Roles
 
-### Roles
-- KILLER
-- ALERTER
-- CENSORER
+- **KILLER** — black CIA role; special attack logic with Impostor/Crewmate outcomes.
+- **ALERTER** — pins one player and receives an alarm when that pinned player makes an Impostor kill.
+- **CENSORER** — places room sensors and opens a live inside-player panel.
 
-All three are registered as MiraAPI Crewmate-side custom roles with the CIA black role color.
+All three CIA roles are currently registered as Crewmate-side MiraAPI custom roles with the CIA black role color.
 
-### KILLER — first functional system
-- Uses MiraAPI's custom murder/RPC pipeline.
-- Host setting: **Kill Cooldown: 10–30 seconds**.
-- The round-start cooldown is loaded from the CIA role setting.
-- The KILLER can only trigger the special interaction when both players are detected in the same room.
-- Against an Impostor, the target is killed through the custom murder RPC with **no dead body**.
-- Against a Crewmate, the target is rolled back toward its recorded position from roughly 5 seconds earlier and the KILLER is killed instead.
-- A short position history is recorded locally for networked players so the rollback can use an actual previous position.
-
-### ALERTER — pin and alarm system
-- Uses MiraAPI's custom action-button system.
-- The ALERTER gets a **CIA PIN** ability button.
-- The nearest living player in ability range can be pinned.
-- Pinning is local to the ALERTER, so the pinned identity is not broadcast to normal players.
-- Host settings:
-  - Pin Cooldown: 10–90 seconds
-  - Pin Duration: 10–30 seconds
-  - Alert Duration: 5–10 seconds
-- When the pinned player performs an Impostor kill, the ALERTER receives the alarm sound and the alert state is active for the configured duration.
-
-## Role settings
-
-CIA role-specific host settings are exposed through MiraAPI role option groups:
+## Host settings
 
 ### KILLER
-- Kill Cooldown: 10–30 seconds
+- Kill Cooldown: **10–30 seconds**
 
 ### ALERTER
-- Pin Cooldown: 10–90 seconds
-- Pin Duration: 10–30 seconds
-- Alert Duration: 5–10 seconds
+- Pin Cooldown: **10–90 seconds**
+- Pin Duration: **10–30 seconds**
+- Alert Duration: **5–10 seconds**
 
 ### CENSORER
-- Max Put Censor: 1–3 sensors
+- Max Put Censor: **1–3 sensors**
 
-## Planned / in progress
+## Implemented systems
 
-- Round-start CIA/vanilla role panel with X-to-close.
-- CENSORER room sensor and player-list panel.
-- Practice Mode dummy role assignment for CREWMATE, IMPOSTOR and all CIA roles.
-- CIA role summary/statistics.
-- Ghost information.
-- Last-location information.
-- Mobile-friendly UI/input adapter.
+### KILLER
+- MiraAPI custom murder event/RPC pipeline.
+- Round-start kill cooldown.
+- Same-room interaction check.
+- Impostor target: target is killed with no dead body.
+- Crewmate target: target is moved toward a recorded position from about 5 seconds earlier, while KILLER dies.
+- Short local position history for rollback.
 
-## Verification rule
+### ALERTER
+- CIA PIN custom action button.
+- Nearest living-player targeting.
+- Pin identity is kept local to the ALERTER.
+- Configurable pin and alert timers.
+- Alarm playback after a pinned Impostor makes a kill.
 
-A feature is considered implemented only after its API calls are verified against the target Among Us/MiraAPI version. Scaffolding and design notes are not treated as playable functionality.
+### CENSORER
+- Sensor state with one-sensor-per-room enforcement.
+- Maximum sensor count from the host setting.
+- Reactor RPC scaffold for synchronizing sensor placement.
+- Live `CENSOR SENSOR / INSIDE` panel.
+- X closes the panel.
+- Panel refreshes the player list while open.
 
-## Role training
+### Round-start role panel
+- Shows the local role after the vanilla intro ends.
+- Supports vanilla and CIA/custom role names.
+- Blocks movement while open.
+- X closes the panel and returns control.
 
-For CIA role training and reference material, use the **Chakabania** channel:
+### Round statistics and last location
+- Tracks round kills and deaths.
+- Tracks each living player's latest detected room.
+- Statistics and location data are currently backend systems; a polished in-game information screen is not yet complete.
+
+### Practice Mode
+- Assignment API supports:
+  - CREWMATE
+  - IMPOSTOR
+  - KILLER
+  - ALERTER
+  - CENSORER
+- A complete user-facing Practice Mode menu/freeplay workflow is not yet implemented.
+
+### Training
+The role training reference is the **Chakabania** channel:
 
 https://www.youtube.com/@chakabania
 
-The same training destination is registered in the mod for the in-game help UI.
+The same destination is registered by the mod for its training/help integration.
+
+## Verification status
+
+The repository contains build workflow configuration, but the target Among Us environment has not been run here. GitHub Actions/runtime results have not been verified yet.
+
+Therefore, code marked as implemented means the system has been added to the repository; it does **not** mean every API call or multiplayer behavior has been proven in a live game.
+
+## Remaining work
+
+- Verify the exact target-version API signatures and resolve compile errors.
+- Run a real Release build and inspect GitHub Actions output.
+- Runtime-test multiplayer synchronization and role behavior.
+- Finish a user-facing Practice Mode UI.
+- Add polished stats/ghost/last-location screens.
+- Improve CENSORER placement to use a verified room-entrance interaction.
+- Add a supported mobile input/UI adapter if the target loader permits it.
+
+## Project rule
+
+No feature is considered fully playable until its API and runtime behavior are verified against the target Among Us/MiraAPI version.
