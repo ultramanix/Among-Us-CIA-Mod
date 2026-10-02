@@ -15,6 +15,11 @@ public static class AlerterState
         AlertUntil = Time.time + duration;
     }
 
+    public static void SetAlert(float duration)
+    {
+        AlertUntil = Time.time + duration;
+    }
+
     public static void Clear()
     {
         PinnedPlayer = null;
