@@ -32,6 +32,7 @@ public partial class CiaPlugin : BasePlugin, IMiraPlugin
     public override void Load()
     {
         CiaIntroEvents.Initialize();
+        KillerPatches.Initialize();
         Harmony.PatchAll();
         Log.LogInfo("CIA loaded.");
     }
