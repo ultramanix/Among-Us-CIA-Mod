@@ -8,10 +8,6 @@ public sealed class CensorerRole : CrewmateRole, ICustomRole
 {
     public string IdPart => "Censorer";
     public string IdPrefix => "CIA.Mod.Role";
-    public string RoleName => "CENSORER";
-    public string RoleDescription => "CIA CENSORER";
-    public string RoleMedDescription => "CENSORER";
-    public string RoleLongDescription => "CENSORER";
 
     public Color RoleColor => Color.black;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
