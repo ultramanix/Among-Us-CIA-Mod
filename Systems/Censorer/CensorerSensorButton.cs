@@ -22,21 +22,27 @@ public sealed class CensorerSensorButton : CustomActionButton
         if (local == null || !CensorerPatches.CanPlaceSensor())
             return;
 
-        if (CensorerState.TryGetSensorForRoom(
-                MiraAPI.Utilities.Helpers.GetRoom(local.transform.position)?.RoomId ?? -1,
-                out var sensor))
+        var room = MiraAPI.Utilities.Helpers.GetRoom(local.transform.position);
+        if (room == null)
+            return;
+
+        if (CensorerState.TryGetSensorForRoom(room.RoomId, out var sensor))
         {
             CensorerPanelUi.Open(sensor.RoomId);
             return;
         }
 
-        if (CensorerState.TryPlace(
-                local.PlayerId,
+        if (!CensorerState.CanAdd(
                 (int)OptionGroupSingleton<CensorerRoleSettings>.Instance.MaxSensors))
-        {
-            var room = MiraAPI.Utilities.Helpers.GetRoom(local.transform.position);
-            if (room != null)
-                CensorerPanelUi.Open(room.RoomId);
-        }
+            return;
+
+        CensorerRpc.RpcPlaceSensor(
+            local,
+            room.RoomId,
+            local.transform.position.x,
+            local.transform.position.y,
+            local.transform.position.z);
+
+        CensorerPanelUi.Open(room.RoomId);
     }
 }
