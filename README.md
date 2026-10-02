@@ -2,36 +2,52 @@
 
 CIA is an Among Us role mod built with C#, BepInEx, Reactor and MiraAPI.
 
-## Current milestone
+## Current implementation
 
-The repository now contains the first real MiraAPI custom-role definitions:
-
+### Roles
 - KILLER
 - ALERTER
 - CENSORER
 
-Each role is currently configured as a simple Crewmate-side custom role with a black CIA color. The vanilla kill/vent/sabotage systems are disabled for the prototype so we can build the CIA mechanics without unintended vanilla behavior.
+All three are registered as MiraAPI Crewmate-side custom roles with the CIA black role color.
 
-## Planned role mechanics
+### KILLER — first functional system
+- Uses MiraAPI's verified custom murder/RPC pipeline.
+- Host setting: **Kill Cooldown: 10–30 seconds**.
+- The round-start cooldown is loaded from the CIA role setting.
+- The KILLER can only trigger the special interaction when both players are detected in the same room.
+- Against an Impostor, the target is killed through the custom murder RPC with **no dead body**.
+- Against a Crewmate, the target is rolled back toward its recorded position from roughly 5 seconds earlier and the KILLER is killed instead.
+- A short position history is recorded locally for networked players so the rollback can use an actual previous position.
+
+## Role settings
+
+CIA role-specific host settings are exposed through MiraAPI role option groups:
 
 ### KILLER
-- 10–30 second host-configurable kill cooldown.
-- Attacking an Impostor kills the Impostor without a body.
-- Attacking a Crewmate rolls the target back roughly 5 seconds and kills the KILLER without a body.
-- The special interaction is restricted to players being in the same area.
+- Kill Cooldown: 10–30 seconds
 
 ### ALERTER
-- Pin one player.
-- If the pinned player is an Impostor and kills, an alarm is triggered.
-- If the pinned player is a Crewmate, no alarm is triggered.
-- Only CIA members know the pinned target.
+- Pin Cooldown: 10–90 seconds
+- Pin Duration: 10–30 seconds
+- Alert Duration: 5–10 seconds
 
 ### CENSORER
-- Place a sensor at a room entrance.
-- Open a panel listing players currently inside.
-- Players leaving are removed from the list.
-- Maximum one sensor per room, with a host-configurable total of 1–3 sensors.
+- Max Put Censor: 1–3 sensors
 
-## Next milestone
+The ALERTER and CENSORER settings are currently registered; their gameplay systems are still being implemented.
 
-Connect role assignment and the round-start role reveal flow, then implement the first KILLER ability.
+## Planned / in progress
+
+- Round-start CIA/vanilla role panel with X-to-close.
+- ALERTER pin and alarm system.
+- CENSORER room sensor and player-list panel.
+- Practice Mode dummy role assignment for CREWMATE, IMPOSTOR and all CIA roles.
+- CIA role summary/statistics.
+- Ghost information.
+- Last-location information.
+- Mobile-friendly UI/input adapter.
+
+## Verification rule
+
+A feature is considered implemented only after its API calls are verified against the target Among Us/MiraAPI version. Scaffolding and design notes are not treated as playable functionality.
