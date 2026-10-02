@@ -12,6 +12,8 @@ public sealed class AlerterRole : CrewmateRole, ICustomRole
     public Color RoleColor => Color.black;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
 
+    public string RoleMedDescription => "ALERTER\n\nRol eğitimi: https://www.youtube.com/@chakabania";
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         MaxRoleCount = 1,
