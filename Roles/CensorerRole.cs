@@ -1,0 +1,31 @@
+using MiraAPI.GameModes;
+using MiraAPI.Roles;
+using UnityEngine;
+
+namespace CIA.Mod.Roles;
+
+public sealed class CensorerRole : CrewmateRole, ICustomRole
+{
+    public string IdPart => "Censorer";
+    public string IdPrefix => "CIA.Mod.Role";
+    public string RoleName => "CENSORER";
+    public string RoleDescription => "CIA CENSORER";
+    public string RoleMedDescription => "CENSORER";
+    public string RoleLongDescription => "CENSORER";
+
+    public Color RoleColor => Color.black;
+    public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
+
+    public CustomRoleConfiguration Configuration => new(this)
+    {
+        MaxRoleCount = 1,
+        DefaultRoleCount = 1,
+        DefaultChance = 100,
+        CanModifyChance = false,
+        CanGetKilled = true,
+        UseVanillaKillButton = false,
+        CanUseVent = false,
+        CanUseSabotage = false,
+        TasksCountForProgress = false
+    };
+}
