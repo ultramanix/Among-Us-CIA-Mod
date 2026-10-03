@@ -4,7 +4,7 @@ CIA is an Among Us role mod built with C#, BepInEx, Reactor and MiraAPI.
 
 ## Roles
 
-- **KILLER** — black CIA role; special attack logic with Impostor/Crewmate outcomes.
+- **KILLER** — special attack logic with Impostor/Crewmate outcomes.
 - **ALERTER** — pins one player and receives an alarm when that pinned player makes an Impostor kill.
 - **CENSORER** — places room sensors and opens a live inside-player panel.
 
