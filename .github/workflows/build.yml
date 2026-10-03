@@ -24,3 +24,12 @@ jobs:
 
       - name: Build
         run: dotnet build CIA-Mod.csproj --configuration Release --no-restore
+
+      - name: Upload CIA DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: CIA-Mod
+          path: |
+            bin/Release/net6.0/CIA-Mod.dll
+            bin/Release/net6.0/CIA-Mod.pdb
+          if-no-files-found: error
