@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-pc:
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -19,17 +19,43 @@ jobs:
         with:
           dotnet-version: "6.0.x"
 
-      - name: Restore
+      - name: Restore PC
         run: dotnet restore CIA-Mod.csproj
 
-      - name: Build
+      - name: Build PC
         run: dotnet build CIA-Mod.csproj --configuration Release --no-restore
 
-      - name: Upload CIA DLL
+      - name: Upload PC DLL
         uses: actions/upload-artifact@v4
         with:
-          name: CIA-Mod
+          name: CIA-Mod-PC
           path: |
             bin/Release/net6.0/CIA-Mod.dll
             bin/Release/net6.0/CIA-Mod.pdb
+          if-no-files-found: error
+
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Restore Android
+        run: dotnet restore CIA-Mod.csproj --configfile NuGet.config
+
+      - name: Build Android compatibility target
+        run: dotnet build CIA-Mod.csproj --configuration Android --no-restore
+
+      - name: Upload Android DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: CIA-Mod-Android
+          path: |
+            bin/Android/net6.0/CIA-Mod.dll
+            bin/Android/net6.0/CIA-Mod.pdb
           if-no-files-found: error
