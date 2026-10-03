@@ -20,7 +20,7 @@ jobs:
           dotnet-version: "6.0.x"
 
       - name: Restore PC
-        run: dotnet restore CIA-Mod.csproj
+        run: dotnet restore CIA-Mod.csproj --configfile NuGet.config
 
       - name: Build PC
         run: dotnet build CIA-Mod.csproj --configuration Release --no-restore
