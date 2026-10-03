@@ -1,5 +1,6 @@
 using System.Linq;
 using MiraAPI.Utilities;
+using CIA.Mod.Roles;
 using TMPro;
 using UnityEngine;
 
@@ -16,7 +17,8 @@ public static class CensorerPanelUi
 
     public static void Open(int roomId)
     {
-        if (PlayerControl.LocalPlayer == null || !CensorerState.TryGetSensorForRoom(roomId, out _))
+        var local = PlayerControl.LocalPlayer;
+        if (local == null || CiaRoleDetector.GetRole(local) != CiaRole.Censorer || !CensorerState.TryGetSensorForRoom(roomId, out var sensor) || sensor.OwnerId != local.PlayerId)
             return;
 
         if (_root == null)
