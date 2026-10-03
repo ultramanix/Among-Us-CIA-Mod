@@ -70,7 +70,7 @@ All three CIA roles are currently registered as Crewmate-side MiraAPI custom rol
 - A complete user-facing Practice Mode menu/freeplay workflow is not yet implemented.
 
 ### Training
-The role training reference is the **Chakabania** channel:
+The role training is the **Chakabania** (my) channel:
 
 https://www.youtube.com/@chakabania
 
